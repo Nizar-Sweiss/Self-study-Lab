@@ -68,6 +68,24 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
             ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "Don\'t Have account ? ",
+                ),
+                TextButton(
+                  onPressed: () {},
+                  child: Text(
+                    "SIGN IN !",
+                    style: TextStyle(
+                        color: Color.fromARGB(255, 0, 157, 255),
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold),
+                  ),
+                )
+              ],
+            ),
           ],
         )),
       ),
