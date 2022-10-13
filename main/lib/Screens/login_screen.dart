@@ -29,9 +29,6 @@ class _LoginScreenState extends State<LoginScreen> {
             TextFormField(
               controller: emailController,
               keyboardType: TextInputType.emailAddress,
-              onFieldSubmitted: (String value) {
-                print(value);
-              },
               onChanged: (String value) {
                 print(value);
               },
@@ -47,9 +44,6 @@ class _LoginScreenState extends State<LoginScreen> {
               controller: passwordController,
               keyboardType: TextInputType.visiblePassword,
               obscureText: true,
-              onFieldSubmitted: (String value) {
-                print(value);
-              },
               onChanged: (String value) {
                 print(value);
               },
@@ -62,6 +56,16 @@ class _LoginScreenState extends State<LoginScreen> {
                   Icons.remove_red_eye,
                 ),
                 border: OutlineInputBorder(),
+              ),
+            ),
+            Container(
+              width: 200,
+              height: 50,
+              child: MaterialButton(
+                onPressed: () {},
+                child: Text(
+                  "Login",
+                ),
               ),
             ),
           ],
