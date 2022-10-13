@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -31,41 +32,30 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             TextFormField(
               controller: emailController,
-              keyboardType: TextInputType.emailAddress,
-              onChanged: (String value) {
-                print(value);
-              },
-              decoration: InputDecoration(
-                labelText: 'Email Address',
-                prefixIcon: Icon(
-                  Icons.email,
-                ),
-                border: OutlineInputBorder(),
-              ),
             ),
             TextFormField(
               controller: passwordController,
-              keyboardType: TextInputType.visiblePassword,
-              obscureText: true,
-              onChanged: (String value) {
-                print(value);
-              },
-              decoration: InputDecoration(
-                labelText: 'Password',
-                prefixIcon: Icon(
-                  Icons.lock,
-                ),
-                suffixIcon: Icon(
-                  Icons.remove_red_eye,
-                ),
-                border: OutlineInputBorder(),
-              ),
             ),
             Container(
               width: 200,
               height: 50,
               child: MaterialButton(
-                onPressed: () {},
+                onPressed: () async {
+                  try {
+                    var authenticationobject = FirebaseAuth.instance;
+
+                    UserCredential myUser =
+                        await authenticationobject.signInWithEmailAndPassword(
+                            email: emailController.text,
+                            password: passwordController.text);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text("Signed In successfully")));
+                  } catch (e) {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text(
+                            "Something Went Wrong Check Your Email And Password")));
+                  }
+                },
                 child: Text(
                   "Login",
                 ),
