@@ -24,9 +24,6 @@ class _LoginScreenState extends State<LoginScreen> {
         child: SingleChildScrollView(
             child: Column(
           children: [
-            Text(
-              "Login",
-            ),
             SizedBox(
               height: 35,
             ),
@@ -49,7 +46,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             email: emailController.text,
                             password: passwordController.text);
                     ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text("Signed In successfully")));
+                        SnackBar(content: Text("Login successfully")));
                   } catch (e) {
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                         content: Text(
@@ -68,7 +65,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   "Don\'t Have account ? ",
                 ),
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.popAndPushNamed(context, "SignIn");
+                  },
                   child: Text(
                     "SIGN IN !",
                     style: TextStyle(
