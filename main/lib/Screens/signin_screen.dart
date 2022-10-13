@@ -8,8 +8,29 @@ class SinginScreen extends StatefulWidget {
 }
 
 class _SinginScreenState extends State<SinginScreen> {
+  var emailController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+        appBar: AppBar(
+          title: Text("Login"),
+          centerTitle: true,
+        ),
+        body: Padding(
+            padding: const EdgeInsets.all(20),
+            child: SingleChildScrollView(
+                child: Column(
+              children: [
+                Text(
+                  "Login",
+                ),
+                SizedBox(
+                  height: 35,
+                ),
+                TextFormField(
+                  controller: emailController,
+                ),
+              ],
+            ))));
   }
 }
