@@ -9,6 +9,7 @@ class SinginScreen extends StatefulWidget {
 
 class _SinginScreenState extends State<SinginScreen> {
   var emailController = TextEditingController();
+  var passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,6 +30,9 @@ class _SinginScreenState extends State<SinginScreen> {
                 ),
                 TextFormField(
                   controller: emailController,
+                ),
+                TextFormField(
+                  controller: passwordController,
                 ),
               ],
             ))));
