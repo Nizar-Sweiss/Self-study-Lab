@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:main/Screens/screens.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const MaterialApp(
+    home: MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -9,7 +12,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return LoginScreen();
   }
 }
 

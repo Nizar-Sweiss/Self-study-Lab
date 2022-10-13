@@ -8,6 +8,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 var emailController = TextEditingController();
+var passwordController = TextEditingController();
 
 class _LoginScreenState extends State<LoginScreen> {
   @override
@@ -38,6 +39,27 @@ class _LoginScreenState extends State<LoginScreen> {
                 labelText: 'Email Address',
                 prefixIcon: Icon(
                   Icons.email,
+                ),
+                border: OutlineInputBorder(),
+              ),
+            ),
+            TextFormField(
+              controller: passwordController,
+              keyboardType: TextInputType.visiblePassword,
+              obscureText: true,
+              onFieldSubmitted: (String value) {
+                print(value);
+              },
+              onChanged: (String value) {
+                print(value);
+              },
+              decoration: InputDecoration(
+                labelText: 'Password',
+                prefixIcon: Icon(
+                  Icons.lock,
+                ),
+                suffixIcon: Icon(
+                  Icons.remove_red_eye,
                 ),
                 border: OutlineInputBorder(),
               ),
