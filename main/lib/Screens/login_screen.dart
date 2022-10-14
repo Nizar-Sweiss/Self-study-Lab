@@ -45,8 +45,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         await authenticationobject.signInWithEmailAndPassword(
                             email: emailController.text,
                             password: passwordController.text);
-                    ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text("Login successfully")));
+                    // ScaffoldMessenger.of(context).showSnackBar(
+                    //     SnackBar(content: Text("Login successfully")));
+                    Navigator.popAndPushNamed(context, "Store");
                   } catch (e) {
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                         content: Text(
