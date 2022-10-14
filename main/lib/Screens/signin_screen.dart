@@ -28,14 +28,53 @@ class _SinginScreenState extends State<SinginScreen> {
                   height: 35,
                 ),
                 TextFormField(
-                  controller: emailController,
-                ),
+                    controller: emailController,
+                    style: TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
+                    decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              width: 1, color: Color.fromARGB(255, 0, 0, 0)),
+                        ),
+                        labelText: "Your Email or UserName ",
+                        labelStyle:
+                            TextStyle(color: Color.fromARGB(213, 0, 0, 0)),
+                        border: OutlineInputBorder(),
+                        prefixIcon: Icon(
+                          Icons.email,
+                          color: Color.fromARGB(255, 0, 0, 0),
+                        ))),
                 TextFormField(
-                  controller: passwordController,
-                ),
+                    controller: passwordController,
+                    style: TextStyle(color: Colors.white),
+                    decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              width: 1, color: Color.fromARGB(255, 0, 0, 0)),
+                        ),
+                        labelText: "Password",
+                        labelStyle:
+                            TextStyle(color: Color.fromARGB(213, 0, 0, 0)),
+                        border: OutlineInputBorder(),
+                        prefixIcon: Icon(
+                          Icons.password,
+                          color: Color.fromARGB(255, 0, 0, 0),
+                        ))),
                 TextFormField(
-                  controller: ConformPasswordController,
-                ),
+                    controller: ConformPasswordController,
+                    style: TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
+                    decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              width: 1, color: Color.fromARGB(255, 0, 0, 0)),
+                        ),
+                        labelText: "Conform Password",
+                        labelStyle:
+                            TextStyle(color: Color.fromARGB(213, 0, 0, 0)),
+                        border: OutlineInputBorder(),
+                        prefixIcon: Icon(
+                          Icons.password,
+                          color: Color.fromARGB(255, 0, 0, 0),
+                        ))),
                 Container(
                   width: 200,
                   height: 50,
