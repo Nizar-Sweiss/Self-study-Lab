@@ -21,6 +21,7 @@ BottomNavigationBarWidget() {
           activeColor: Colors.white,
           tabBorderRadius: 15,
           iconSize: 18,
+          textSize: 20,
           gap: 15,
           onTabChange: (index) {},
           padding: const EdgeInsets.all(15),
@@ -28,13 +29,14 @@ BottomNavigationBarWidget() {
             GButton(
               icon: FontAwesomeIcons.bookmark,
               text: "Notes",
-              textSize: 20,
               iconActiveColor: Colors.yellow,
               textColor: Colors.yellow,
             ),
             GButton(
               icon: FontAwesomeIcons.user,
               text: "Account",
+              iconActiveColor: Colors.lightGreen,
+              textColor: Colors.lightGreen,
             )
           ],
         ),

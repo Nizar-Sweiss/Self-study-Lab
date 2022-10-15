@@ -3,15 +3,6 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:main/utility/utility.dart';
 
-List colors = [
-  Colors.red.shade200,
-  Colors.orange.shade200,
-  Colors.yellow.shade200,
-  Colors.green.shade200,
-  Colors.blue.shade200,
-];
-Color getColor() => (colors..shuffle()).first;
-
 class MasonryGridViewWidget extends StatefulWidget {
   const MasonryGridViewWidget({super.key});
 
@@ -64,7 +55,7 @@ class _MasonryGridViewWidgetState extends State<MasonryGridViewWidget> {
                     Text(
                       documentSnapshot['description'],
                       maxLines: 30,
-                      style:  TextStyle(
+                      style: TextStyle(
                         color: Colors.grey.shade800,
                         fontWeight: FontWeight.bold,
                         fontSize: 12,

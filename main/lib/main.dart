@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:main/screens/home_screen.dart';
-import 'utility/firebase_options.dart';
 import 'package:main/screens/screens.dart';
+import 'package:main/utility/utility.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,7 +27,7 @@ class MyApp extends StatelessWidget {
         return MaterialApp(
           routes: {
             "SignIn": (context) => SinginScreen(),
-            "Store": (context) => Store()
+            "Store": (context) => HomeScreen()
           },
           debugShowCheckedModeBanner: false,
           home: snapshot.connectionState != ConnectionState.active
