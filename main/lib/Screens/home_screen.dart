@@ -2,6 +2,16 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+
+List colors = [
+  Colors.red.shade100,
+  Colors.orange.shade100,
+  Colors.yellow.shade100,
+  Colors.green.shade100,
+  Colors.blue.shade100,
+];
+Color getColor() => (colors..shuffle()).first;
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -11,84 +21,83 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  // text fields' controllers
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _priceController = TextEditingController();
+  final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
   final _auth = FirebaseAuth.instance;
-  final CollectionReference _notes = FirebaseFirestore.instance
-      .collection('notes-${FirebaseAuth.instance.currentUser!.uid}');
+  final CollectionReference _notes = FirebaseFirestore.instance.collection(
+    'notes-${FirebaseAuth.instance.currentUser!.uid}',
+  );
+
   //----------- DELETE FUNCTION -----------//
-  Future<void> _deleteProduct(String productId) async {
-    await _notes.doc(productId).delete();
-  }
+  // Future<void> _deleteProduct(String productId) async {
+  //   await _notes.doc(productId).delete();
+  // }
 
   //----------- CREATE OR UPDATE FUNCTION -----------//
   Future<void> _createOrUpdate([DocumentSnapshot? documentSnapshot]) async {
     String action = 'create';
     if (documentSnapshot != null) {
       action = 'update';
-      _nameController.text = documentSnapshot['name'];
-      _priceController.text = documentSnapshot['price'].toString();
+      _titleController.text = documentSnapshot['title'];
+      _descriptionController.text = documentSnapshot['description'];
     }
     await showModalBottomSheet(
-        isScrollControlled: true,
-        context: context,
-        builder: (BuildContext ctx) {
-          return Padding(
-            padding: EdgeInsets.only(
-                top: 20,
-                left: 20,
-                right: 20,
-                // prevent the soft keyboard from covering text fields
-                bottom: MediaQuery.of(ctx).viewInsets.bottom + 20),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                TextField(
-                  controller: _nameController,
-                  decoration: const InputDecoration(labelText: 'Name'),
+      isScrollControlled: true,
+      context: context,
+      builder: (BuildContext ctx) {
+        return Padding(
+          padding: EdgeInsets.only(
+              top: 20,
+              left: 20,
+              right: 20,
+              // prevent the soft keyboard from covering text fields
+              bottom: MediaQuery.of(ctx).viewInsets.bottom + 20),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              TextField(
+                controller: _titleController,
+                decoration: const InputDecoration(
+                  labelText: 'title',
                 ),
-                TextField(
-                  keyboardType:
-                      const TextInputType.numberWithOptions(decimal: true),
-                  controller: _priceController,
-                  decoration: const InputDecoration(
-                    labelText: 'Price',
-                  ),
+              ),
+              TextField(
+                controller: _descriptionController,
+                decoration: const InputDecoration(
+                  labelText: 'description',
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
-                ElevatedButton(
-                  child: Text(action == 'create' ? 'Create' : 'Update'),
-                  onPressed: () async {
-                    final String? name = _nameController.text;
-                    final double? price =
-                        double.tryParse(_priceController.text);
-                    if (name != null && price != null) {
-                      if (action == 'create') {
-                        // Persist a new product to Firestore
-                        await _notes.add({"name": name, "price": price});
-                      }
-                      if (action == 'update') {
-                        // Update the product
-                        await _notes
-                            .doc(documentSnapshot!.id)
-                            .update({"name": name, "price": price});
-                      }
-                      // Clear the text fields
-                      _nameController.text = '';
-                      _priceController.text = '';
-                      // Hide the bottom sheet
-                      Navigator.of(context).pop();
-                    }
-                  },
-                )
-              ],
-            ),
-          );
-        });
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              ElevatedButton(
+                child: Text(action == 'create' ? 'Create' : 'Update'),
+                onPressed: () async {
+                  final String title = _titleController.text;
+                  final String description = _descriptionController.text;
+                  if (action == 'create') {
+                    await _notes.add({
+                      "title": title,
+                      "description": description,
+                    });
+                  }
+                  if (action == 'update') {
+                    await _notes.doc(documentSnapshot!.id).update({
+                      "title": title,
+                      "description": description,
+                    });
+                  }
+                  _titleController.text = '';
+                  _descriptionController.text = '';
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 
   //----------- SCREEN UI -----------//
@@ -101,10 +110,10 @@ class _HomeScreenState extends State<HomeScreen> {
       // Using StreamBuilder to display all products from Firestore in real-time
       body: Column(
         children: [
-          Text(FirebaseAuth.instance.currentUser!.email.toString()),
+          Text(_auth.currentUser!.email.toString()),
           TextButton(
             onPressed: () {
-              FirebaseAuth.instance.signOut();
+              _auth.signOut();
             },
             child: const Text("Sign-out"),
           ),
@@ -126,50 +135,48 @@ class _HomeScreenState extends State<HomeScreen> {
       stream: _notes.snapshots(),
       builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
         if (streamSnapshot.hasData) {
-          return GridView.builder(
+          return MasonryGridView.count(
+            crossAxisCount: 2,
+            mainAxisSpacing: 10,
+            crossAxisSpacing: 10,
+            padding: const EdgeInsets.all(10),
             itemCount: streamSnapshot.data!.docs.length,
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              childAspectRatio: 1,
-              mainAxisExtent: 220,
-            ),
             itemBuilder: (context, index) {
               final DocumentSnapshot documentSnapshot =
                   streamSnapshot.data!.docs[index];
               return Container(
-                margin: EdgeInsets.all(5),
-                padding: EdgeInsets.all(15),
+                padding: const EdgeInsets.all(15),
+                constraints: const BoxConstraints(
+                  minHeight: 150,
+                ),
                 decoration: BoxDecoration(
-                  color: Colors.redAccent,
+                  color: getColor(),
                   borderRadius: BorderRadius.circular(10),
                   boxShadow: const [
                     BoxShadow(
                       spreadRadius: 1,
                       blurRadius: 5,
-                      color: Colors.black26,
+                      color: Colors.black12,
                     )
                   ],
                 ),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Text(
-                      documentSnapshot['name'],
+                      documentSnapshot['title'],
                       style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Row(
-                      children: [
-                        Text(
-                          documentSnapshot['price'].toString(),
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15,
-                          ),
-                        ),
-                      ],
+                    Text(
+                      documentSnapshot['description'],
+                      maxLines: 30,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 12,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     )
                   ],
                 ),
