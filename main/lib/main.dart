@@ -26,12 +26,16 @@ class MyApp extends StatelessWidget {
         final user = snapshot.data;
         return MaterialApp(
           routes: {
-            "SignIn": (context) => SinginScreen(),
-            "Store": (context) => HomeScreen()
+            "SignUp": (context) => const SignUpScreen(),
+            "Store": (context) => const HomeScreen()
           },
           debugShowCheckedModeBanner: false,
           home: snapshot.connectionState != ConnectionState.active
-              ? const Center(child: CircularProgressIndicator())
+              ? Center(
+                  child: CircularProgressIndicator(
+                    backgroundColor: Colors.grey.shade900,
+                  ),
+                )
               : user != null
                   ? const HomeScreen()
                   : const LoginScreen(),
