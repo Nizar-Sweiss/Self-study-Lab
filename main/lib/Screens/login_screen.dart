@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:main/utility/random_color.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -15,51 +16,86 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       appBar: AppBar(
-        title: Text("Login"),
+        elevation: 0,
+        backgroundColor: Colors.black,
+        shadowColor: Colors.white,
         centerTitle: true,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: SingleChildScrollView(
-            child: Column(
+      body: SafeArea(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(
-              height: 35,
+            Container(
+              alignment: Alignment.topLeft,
+              child: Text(
+                "LOGIN",
+                style: TextStyle(color: Colors.white, fontSize: 50),
+              ),
             ),
-            TextFormField(
-                controller: emailController,
-                style: TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
-                decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          width: 1, color: Color.fromARGB(255, 0, 0, 0)),
-                    ),
-                    labelText: "Your Email or UserName ",
-                    labelStyle: TextStyle(color: Color.fromARGB(213, 0, 0, 0)),
-                    border: OutlineInputBorder(),
-                    prefixIcon: Icon(
-                      Icons.email,
-                      color: Color.fromARGB(255, 0, 0, 0),
-                    ))),
-            TextFormField(
-                controller: passwordController,
-                style: TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
-                decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          width: 1, color: Color.fromARGB(255, 0, 0, 0)),
-                    ),
-                    labelText: "Password",
-                    labelStyle: TextStyle(color: Color.fromARGB(213, 0, 0, 0)),
-                    border: OutlineInputBorder(),
-                    prefixIcon: Icon(
-                      Icons.password,
-                      color: Color.fromARGB(255, 0, 0, 0),
-                    ))),
+            Container(
+              alignment: Alignment.topLeft,
+              child: Text(
+                "Login now to add your personal notes ",
+                style: TextStyle(color: Colors.white70, fontSize: 20),
+              ),
+            ),
+            SizedBox(
+              height: 55,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: TextFormField(
+                  controller: emailController,
+                  style: TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
+                  decoration: InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                        borderSide: BorderSide(
+                            width: 1,
+                            color: Color.fromARGB(255, 255, 255, 255)),
+                      ),
+                      labelText: "Your Email or UserName ",
+                      labelStyle:
+                          TextStyle(color: Color.fromARGB(212, 255, 255, 255)),
+                      border: OutlineInputBorder(),
+                      prefixIcon: Icon(
+                        Icons.email,
+                        color: Color.fromARGB(255, 255, 255, 255),
+                      ))),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: TextFormField(
+                  controller: passwordController,
+                  style: TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
+                  decoration: InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                        borderSide: BorderSide(
+                            width: 1,
+                            color: Color.fromARGB(255, 255, 255, 255)),
+                      ),
+                      labelText: "Password",
+                      labelStyle:
+                          TextStyle(color: Color.fromARGB(212, 255, 255, 255)),
+                      border: OutlineInputBorder(),
+                      prefixIcon: Icon(
+                        Icons.password,
+                        color: Color.fromARGB(255, 255, 255, 255),
+                      ))),
+            ),
             Container(
               width: 200,
               height: 50,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border.all(width: 3.0),
+                borderRadius: BorderRadius.all(Radius.circular(
+                        20.0) //                 <--- border radius here
+                    ),
+              ),
               child: MaterialButton(
                 onPressed: () async {
                   try {
@@ -72,6 +108,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     //Navigator.popAndPushNamed(context, "Store");
                   } catch (e) {
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        backgroundColor: Color.fromARGB(255, 144, 2, 30),
                         content: Text(
                             "Something Went Wrong Check Your Email And Password")));
                   }
@@ -86,6 +123,7 @@ class _LoginScreenState extends State<LoginScreen> {
               children: [
                 Text(
                   "Don\'t Have account ? ",
+                  style: TextStyle(color: Colors.white),
                 ),
                 TextButton(
                   onPressed: () {
@@ -102,7 +140,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ],
             ),
           ],
-        )),
+        ),
       ),
     );
   }
