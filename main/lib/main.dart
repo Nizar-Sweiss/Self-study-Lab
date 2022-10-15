@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:main/screens/home_screen.dart';
 import 'firebase_options.dart';
 import 'package:main/screens/screens.dart';
 
@@ -25,11 +26,15 @@ class MyApp extends StatelessWidget {
         }
         final user = snapshot.data;
         return MaterialApp(
+          routes: {
+            "SignIn": (context) => SinginScreen(),
+            "Store": (context) => Store()
+          },
           debugShowCheckedModeBanner: false,
           home: snapshot.connectionState != ConnectionState.active
               ? const Center(child: CircularProgressIndicator())
               : user != null
-                  ? const StoreScreen()
+                  ? const HomeScreen()
                   : const LoginScreen(),
         );
       },
