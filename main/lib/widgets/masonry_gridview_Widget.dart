@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:main/utility/utility.dart';
+import 'package:main/widgets/widgets.dart';
 
 class MasonryGridViewWidget extends StatefulWidget {
   const MasonryGridViewWidget({super.key});
@@ -27,7 +29,7 @@ class _MasonryGridViewWidgetState extends State<MasonryGridViewWidget> {
               final DocumentSnapshot documentSnapshot =
                   streamSnapshot.data!.docs[index];
               return Container(
-                padding: const EdgeInsets.all(15),
+                padding: const EdgeInsets.fromLTRB(15, 15, 15, 0),
                 constraints: const BoxConstraints(
                   minHeight: 150,
                 ),
@@ -43,25 +45,52 @@ class _MasonryGridViewWidgetState extends State<MasonryGridViewWidget> {
                   ],
                 ),
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      documentSnapshot['title'],
-                      style: TextStyle(
-                        color: Colors.grey.shade900,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
+                    Column(
+                      children: [
+                        Text(
+                          documentSnapshot['title'],
+                          style: TextStyle(
+                            color: Colors.grey.shade900,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          documentSnapshot['description'],
+                          maxLines: 30,
+                          style: TextStyle(
+                            color: Colors.grey.shade900,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ],
                     ),
-                    Text(
-                      documentSnapshot['description'],
-                      maxLines: 30,
-                      style: TextStyle(
-                        color: Colors.grey.shade800,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 12,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    )
+                    const SizedBox(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        IconButton(
+                          onPressed: () {
+                            deleteNote(context, documentSnapshot.id);
+                          },
+                          icon: const FaIcon(FontAwesomeIcons.trash),
+                          iconSize: 15,
+                          color: Colors.grey.shade800,
+                        ),
+                        IconButton(
+                          onPressed: () {
+                            createOrUpdate(context, documentSnapshot);
+                          },
+                          icon: const FaIcon(FontAwesomeIcons.pen),
+                          iconSize: 15,
+                          color: Colors.grey.shade800,
+                        )
+                      ],
+                    ),
                   ],
                 ),
               );

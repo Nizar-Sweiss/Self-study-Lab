@@ -1,3 +1,4 @@
+import 'dart:js';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -37,18 +38,27 @@ Future<void> createOrUpdate(context,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       TextField(
+                        maxLines: 1,
                         keyboardType: TextInputType.multiline,
                         textInputAction: TextInputAction.next,
                         controller: _titleController,
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.grey.shade900),
+                          ),
                           hintText: 'Title',
                         ),
                       ),
                       const SizedBox(height: 20),
                       TextField(
                         maxLines: 30,
+                        keyboardType: TextInputType.text,
+                        textInputAction: TextInputAction.done,
                         controller: _descriptionController,
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.grey.shade900),
+                          ),
                           hintText: 'Note',
                         ),
                       ),
@@ -99,6 +109,65 @@ Future<void> createOrUpdate(context,
                     ),
                   ),
                 ),
+              ],
+            ),
+          ),
+        ),
+      );
+    },
+  );
+}
+
+Future<void> deleteNote(context, String noteID) async {
+  await showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
+        child: AlertDialog(
+          backgroundColor: Colors.grey.shade900,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          content: SizedBox(
+            height: 300,
+            width: 100,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  "Are you sure you wan't to delete this note?",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.grey.shade600,
+                        fixedSize: const Size(100, 50),
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: const Text("Cancel"),
+                    ),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.red,
+                        fixedSize: const Size(100, 50),
+                      ),
+                      onPressed: () {
+                        notes.doc(noteID).delete();
+                        Navigator.of(context).pop();
+                      },
+                      child: const Text("Delete"),
+                    )
+                  ],
+                )
               ],
             ),
           ),
