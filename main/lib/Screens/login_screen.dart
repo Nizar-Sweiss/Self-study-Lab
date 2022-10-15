@@ -89,7 +89,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 TextButton(
                   onPressed: () {
-                    Navigator.popAndPushNamed(context, "SignIn");
+                    Navigator.pushNamed(context, "SignIn");
                   },
                   child: Text(
                     "SIGN IN !",
