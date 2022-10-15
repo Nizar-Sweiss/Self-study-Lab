@@ -64,14 +64,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 onPressed: () async {
                   try {
                     var authenticationobject = FirebaseAuth.instance;
-
-                    UserCredential myUser =
-                        await authenticationobject.signInWithEmailAndPassword(
-                            email: emailController.text,
-                            password: passwordController.text);
+                    await authenticationobject.signInWithEmailAndPassword(
+                        email: emailController.text,
+                        password: passwordController.text);
                     // ScaffoldMessenger.of(context).showSnackBar(
                     //     SnackBar(content: Text("Login successfully")));
-                    Navigator.popAndPushNamed(context, "Store");
+                    //Navigator.popAndPushNamed(context, "Store");
                   } catch (e) {
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                         content: Text(

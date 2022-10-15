@@ -1,7 +1,7 @@
 // main.dart
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Store extends StatelessWidget {
   const Store({Key? key}) : super(key: key);
@@ -120,56 +120,72 @@ class _StoreScreenState extends State<StoreScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Kindacode.com'),
+        title: const Text('Home'),
       ),
       // Using StreamBuilder to display all products from Firestore in real-time
-      body: StreamBuilder(
-        stream: _productss.snapshots(),
-        builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
-          if (streamSnapshot.hasData) {
-            return ListView.builder(
-              itemCount: streamSnapshot.data!.docs.length,
-              itemBuilder: (context, index) {
-                final DocumentSnapshot documentSnapshot =
-                    streamSnapshot.data!.docs[index];
-                return Card(
-                  margin: const EdgeInsets.all(10),
-                  child: ListTile(
-                    title: Text(documentSnapshot['name']),
-                    subtitle: Text(documentSnapshot['price'].toString()),
-                    trailing: SizedBox(
-                      width: 100,
-                      child: Row(
-                        children: [
-                          // Press this button to edit a single product
-                          IconButton(
-                              icon: const Icon(Icons.edit),
-                              onPressed: () =>
-                                  _createOrUpdate(documentSnapshot)),
-                          // This icon button is used to delete a single product
-                          IconButton(
-                              icon: const Icon(Icons.delete),
-                              onPressed: () =>
-                                  _deleteProduct(documentSnapshot.id)),
-                        ],
-                      ),
-                    ),
-                  ),
-                );
-              },
-            );
-          }
-
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        },
+      body: Column(
+        children: [
+          Text(FirebaseAuth.instance.currentUser!.email.toString()),
+          TextButton(
+            onPressed: () {
+              FirebaseAuth.instance.signOut();
+            },
+            child: const Text("Sign-out"),
+          ),
+          Expanded(
+            child: _streamBuilderWidget(),
+          ),
+        ],
       ),
       // Add new product
       floatingActionButton: FloatingActionButton(
         onPressed: () => _createOrUpdate(),
         child: const Icon(Icons.add),
       ),
+    );
+  }
+
+  _streamBuilderWidget() {
+    return StreamBuilder(
+      stream: _productss.snapshots(),
+      builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
+        if (streamSnapshot.hasData) {
+          return ListView.builder(
+            itemCount: streamSnapshot.data!.docs.length,
+            itemBuilder: (context, index) {
+              final DocumentSnapshot documentSnapshot =
+                  streamSnapshot.data!.docs[index];
+              return Card(
+                margin: const EdgeInsets.all(10),
+                child: ListTile(
+                  title: Text(documentSnapshot['name']),
+                  subtitle: Text(documentSnapshot['price'].toString()),
+                  trailing: SizedBox(
+                    width: 100,
+                    child: Row(
+                      children: [
+                        // Press this button to edit a single product
+                        IconButton(
+                            icon: const Icon(Icons.edit),
+                            onPressed: () => _createOrUpdate(documentSnapshot)),
+                        // This icon button is used to delete a single product
+                        IconButton(
+                            icon: const Icon(Icons.delete),
+                            onPressed: () =>
+                                _deleteProduct(documentSnapshot.id)),
+                      ],
+                    ),
+                  ),
+                ),
+              );
+            },
+          );
+        }
+
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      },
     );
   }
 }
