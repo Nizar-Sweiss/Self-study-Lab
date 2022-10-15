@@ -10,11 +10,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  // Future<void> _deleteProduct(String productId) async {
-  //   await _notes.doc(productId).delete();
-  // }
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,11 +31,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-      // Add new product
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () => _createOrUpdate(),
-      //   child: const Icon(Icons.add),
-      // ),
     );
   }
 }
