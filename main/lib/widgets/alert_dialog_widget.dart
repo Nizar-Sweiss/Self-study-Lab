@@ -42,6 +42,9 @@ Future<void> createOrUpdate(context,
                         keyboardType: TextInputType.multiline,
                         textInputAction: TextInputAction.next,
                         controller: _titleController,
+                        style: TextStyle(
+                          color: Colors.grey.shade900,
+                        ),
                         decoration: InputDecoration(
                           focusedBorder: UnderlineInputBorder(
                             borderSide: BorderSide(color: Colors.grey.shade900),
@@ -55,9 +58,12 @@ Future<void> createOrUpdate(context,
                         keyboardType: TextInputType.text,
                         textInputAction: TextInputAction.done,
                         controller: _descriptionController,
+                        style: TextStyle(
+                          color: Colors.grey.shade900,
+                        ),
                         decoration: InputDecoration(
                           focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.grey.shade900),
+                            borderSide: BorderSide(color: Colors.grey.shade800),
                           ),
                           hintText: 'Note',
                         ),

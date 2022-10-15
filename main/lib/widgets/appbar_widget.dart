@@ -1,8 +1,7 @@
-import 'dart:js';
-
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:main/widgets/widgets.dart';
+
 // ignore: non_constant_identifier_names
 AppBarWidget(context) {
   return AppBar(

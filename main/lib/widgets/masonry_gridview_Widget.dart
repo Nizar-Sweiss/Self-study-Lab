@@ -61,9 +61,8 @@ class _MasonryGridViewWidgetState extends State<MasonryGridViewWidget> {
                           documentSnapshot['description'],
                           maxLines: 30,
                           style: TextStyle(
-                            color: Colors.grey.shade900,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 12,
+                            color: Colors.grey.shade800,
+                            fontSize: 15,
                             overflow: TextOverflow.ellipsis,
                           ),
                         ),
